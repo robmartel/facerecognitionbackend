@@ -9,14 +9,27 @@ const profile = require('./controllers/profile');
 const image = require('./controllers/image');
 
 const db = knex({
-  client: 'pg',
-  connection: {
-    host: '127.0.0.1', //same as localhost, you can change to address of where you would deploy
-    user: 'robmartel',
-    password: '',
-    database: 'smart-brain',
-  },
-});
+    client: 'pg',
+    connection: {
+        connectionString : process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false },
+        host: process.env.DATABASE_HOST,
+        port: 5432,
+      user: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PW,
+      database: process.env.DATABASE_DB,
+    },
+  });
+
+// const db = knex({
+//   client: 'pg',
+//   connection: {
+//     host: '127.0.0.1', //same as localhost, you can change to address of where you would deploy
+//     user: 'robmartel',
+//     password: '',
+//     database: 'smart-brain',
+//   },
+// });
 
 const app = express();
 
