@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 const knex = require('knex');
@@ -13,7 +12,7 @@ const db = knex({
     client: 'pg',
     connection: {
         connectionString : process.env.DATABASE_URL,
-        ssl: true,
+        ssl: { rejectUnauthorized: false },
         host: process.env.DATABASE_HOST,
         port: 5432,
       user: process.env.DATABASE_USER,
@@ -34,7 +33,11 @@ const db = knex({
 
 const app = express();
 
-app.use(bodyParser.json());
+// const bodyParser = require('body-parser');
+
+// app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(cors());
 
 
